@@ -5,6 +5,9 @@
  *  
  */
 
+  int disablePin = 7;  
+  int disableReading;
+  
 void setup() {
 
   pinMode(2, OUTPUT); //Status led RED
@@ -13,7 +16,7 @@ void setup() {
 
   pinMode(5, INPUT); //InfraRed receiver cable
 
-  pinMode(7, INPUT); //Button 1 (On/Off)
+  pinMode(disablePin, INPUT); //Switch 1 (Disable lampy)
   pinMode(8, INPUT); //Button 2 (Browse colors)
 
   pinMode(9, OUTPUT); // RGB RED
@@ -24,5 +27,12 @@ void setup() {
 }
 
 void loop() {
-  
+  disableReading = digitalRead(disablePin);  
+  if(disableReading == HIGH){
+  //Everything is disabled
+  }else{
+  //Everything is enabled
+        
+  }
+
 }
