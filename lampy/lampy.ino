@@ -7,12 +7,15 @@
 
   int disablePin = 7;  
   int disableReading;
+
+  int statusRedPin = 2;
+  int statusGreenPin = 4;
   
 void setup() {
 
-  pinMode(2, OUTPUT); //Status led RED
+  pinMode(statusRedPin, OUTPUT); //Status led RED
   pinMode(3, OUTPUT); //Status led YELLOW
-  pinMode(4, OUTPUT); //Status led GREEN
+  pinMode(statusGreenPin, OUTPUT); //Status led GREEN
 
   pinMode(5, INPUT); //InfraRed receiver cable
 
@@ -29,10 +32,13 @@ void setup() {
 void loop() {
   disableReading = digitalRead(disablePin);  
   if(disableReading == HIGH){
-  //Everything is disabled
+    //Everything is disabled
+    digitalWrite(statusRedPin, HIGH);
+    digitalWrite(statusGreenPin, LOW);
   }else{
-  //Everything is enabled
-        
+    //Everything is enabled
+    digitalWrite(statusRedPin, LOW);
+    digitalWrite(statusGreenPin, HIGH);
   }
 
 }
