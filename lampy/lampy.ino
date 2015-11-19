@@ -14,7 +14,7 @@
 void setup() {
 
   pinMode(statusRedPin, OUTPUT); //Status led RED
-  pinMode(3, OUTPUT); //Status led YELLOW
+  pinMode(13, OUTPUT); //Status led YELLOW
   pinMode(statusGreenPin, OUTPUT); //Status led GREEN
 
   pinMode(5, INPUT); //InfraRed receiver cable
