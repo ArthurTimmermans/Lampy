@@ -11,9 +11,13 @@
   int statusRedPin = 2;
   int statusGreenPin = 4;
 
+  int ledRed = 9;
+  int ledGreen = 10;
+  int ledBlue = 11;
+
   int buttonPagePin = 8;
   int buttonPage = 0;
-  int buttonAmountPages = 4;
+  int buttonAmountPages = 3;
   int buttonState = 0;
   int lastButtonState = 0;
   
@@ -29,9 +33,9 @@ void setup() {
   pinMode(disablePin, INPUT); //Switch 1 (Disable lampy)
   pinMode(buttonPagePin, INPUT); //Button 2 (Browse colors)
 
-  pinMode(9, OUTPUT); // RGB RED
-  pinMode(10, OUTPUT); //RGB GREEN
-  pinMode(11, OUTPUT); //RGB BLUE
+  pinMode(ledRed, OUTPUT); // RGB RED
+  pinMode(ledGreen, OUTPUT); //RGB GREEN
+  pinMode(ledBlue, OUTPUT); //RGB BLUE
 
   Serial.begin(9600);
 }
@@ -62,6 +66,7 @@ void loop() {
       delay(50); //avoid bouncing
     }
     lastButtonState = buttonState;
+    lightScene(buttonPage);
   }
 
 }
@@ -73,5 +78,26 @@ void resetLights(){
     digitalWrite(resetRGB, LOW);
   }
   digitalWrite(13, LOW);
+}
+
+void lightScene(int page){
+  switch(page){
+    case 0:
+      // nothing
+      break;
+    case 1:
+      // Red Light
+      resetLights();
+      digitalWrite(ledRed, HIGH);
+      break;
+    case 2:
+      resetLights();
+      digitalWrite(ledGreen, HIGH);
+      break;
+    case 3:
+      resetLights();
+      digitalWrite(ledBlue, HIGH);
+      break;
+  }
 }
 
