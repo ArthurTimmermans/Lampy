@@ -10,6 +10,13 @@
 
   int statusRedPin = 2;
   int statusGreenPin = 4;
+
+  int buttonPagePin = 8;
+  int buttonPage = 0;
+  int buttonAmountPages = 4;
+  int buttonState = 0;
+  int lastButtonState = 0;
+  
   
 void setup() {
 
@@ -20,7 +27,7 @@ void setup() {
   pinMode(5, INPUT); //InfraRed receiver cable
 
   pinMode(disablePin, INPUT); //Switch 1 (Disable lampy)
-  pinMode(8, INPUT); //Button 2 (Browse colors)
+  pinMode(buttonPagePin, INPUT); //Button 2 (Browse colors)
 
   pinMode(9, OUTPUT); // RGB RED
   pinMode(10, OUTPUT); //RGB GREEN
@@ -39,6 +46,32 @@ void loop() {
     //Everything is enabled
     digitalWrite(statusRedPin, LOW);
     digitalWrite(statusGreenPin, HIGH);
+
+    buttonState = digitalRead(buttonPagePin);
+
+    if(buttonState != lastButtonState){
+      if(buttonState == HIGH){
+        if(buttonPage < buttonAmountPages){
+          buttonPage++;
+        }else{
+          buttonPage = 0;
+        }
+        Serial.print(buttonPage);
+        resetLights();
+      }
+      delay(50); //avoid bouncing
+    }
+    lastButtonState = buttonState;
   }
 
 }
+
+void resetLights(){
+  digitalWrite(2, LOW);
+  digitalWrite(4, LOW);
+  for(int resetRGB = 9; resetRGB < 12; resetRGB++){
+    digitalWrite(resetRGB, LOW);
+  }
+  digitalWrite(13, LOW);
+}
+
