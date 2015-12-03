@@ -20,7 +20,9 @@
   int buttonAmountPages = 3;
   int buttonState = 0;
   int lastButtonState = 0;
-  
+
+  int curFlag = 0;
+  int flag = 1;
   
 void setup() {
 
@@ -61,7 +63,7 @@ void loop() {
           buttonPage = 0;
         }
         Serial.print(buttonPage);
-        resetLights();
+        //resetLights();
       }
       delay(50); //avoid bouncing
     }
@@ -71,31 +73,35 @@ void loop() {
 
 }
 
-void resetLights(){
-  digitalWrite(2, LOW);
-  digitalWrite(4, LOW);
-  for(int resetRGB = 9; resetRGB < 12; resetRGB++){
-    digitalWrite(resetRGB, LOW);
+void resetLights(int flag){
+  if(curFlag != flag){
+    digitalWrite(2, LOW);
+    digitalWrite(4, LOW);
+    for(int resetRGB = 9; resetRGB < 12; resetRGB++){
+      digitalWrite(resetRGB, LOW);
+    }
+    digitalWrite(13, LOW);
+    curFlag = flag;
   }
-  digitalWrite(13, LOW);
 }
 
 void lightScene(int page){
   switch(page){
     case 0:
       // nothing
+      resetLights(page);
       break;
     case 1:
       // Red Light
-      resetLights();
+      resetLights(page);
       digitalWrite(ledRed, HIGH);
       break;
     case 2:
-      resetLights();
+      resetLights(page);
       digitalWrite(ledGreen, HIGH);
       break;
     case 3:
-      resetLights();
+      resetLights(page);
       digitalWrite(ledBlue, HIGH);
       break;
   }
